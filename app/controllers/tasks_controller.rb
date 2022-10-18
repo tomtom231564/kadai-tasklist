@@ -60,12 +60,14 @@ class TasksController < ApplicationController
   end
   
   private
+  
+  
 
   # Strong Parameter
   def task_params
     #Messageモデルのフォームから得られるデータに関するものだと明示し、
     #.permit(:content) で必要なカラムだけを選択しています。
-    params.require(:task).permit(:content)
+    params.require(:task).permit(:status,:content)
   end
   
 end
