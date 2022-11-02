@@ -1,11 +1,13 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in#課題に合わせて挿入
+  before_action :correct_user, only: [:destroy,:show,:update]
   #before_action :set_task, only: [:show, :edit, :update, :destroy]
   
-   def index
+  def index
     #indexアクションの役割はmessegeモデルのレコードの一覧表示
     #@messageはインスタンス変数　Message.allはraillのライブラリの記述
-    @tasks = Task.all
+      @tasks = Task.all
+      @pagy, @tasks = pagy(current_user.tasks.order(id: :desc), items: 25)
   end
 
   def show
@@ -19,7 +21,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    #@task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     #@message.saveは失敗するとfalseを返すため、成功した場合と失敗した場合を書く
     if @task.save
       #flashはflashメッセージを出す別ファイルをベット作る
@@ -40,6 +43,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    #@task = current_user.tasks.build(task_params[:id])
      @task = Task.find(params[:id])
 
     if @task.update(task_params)
@@ -57,7 +61,7 @@ class TasksController < ApplicationController
 
     flash[:success] = 'Task は正常に削除されました'
     #リダイレクトするときだけはprefix + _url
-    redirect_to tasks_url
+    redirect_to root_url
   end
   
   private
@@ -70,5 +74,14 @@ class TasksController < ApplicationController
     #.permit(:content) で必要なカラムだけを選択しています。
     params.require(:task).permit(:status,:content)
   end
+  
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
+      redirect_to root_url
+    end
+  end
+  
+  
   
 end

@@ -1,0 +1,25 @@
+<% if tasks.any? %>
+  <ul class="list-unstyled mt-2">
+    <% tasks.each do |task| %>
+    <%# @tasks.each do |task| %>
+    <%# tasks.each do |task| %>
+    <!--<%# @tasks.each do |task| %>-->
+      <li class="d-flex">
+        <!--<img class="rounded me-2 mb-5" src="<%#= gravatar_url(task.user, { size: 64 }) %>" alt="">
+        -->
+        <div>
+          <div> <%#= link_to task.id, edit_task_path(task) %>
+          <%= link_to task.id, edit_task_path(task) %>: <%=task.status %> <%= task.content %>
+                
+          </div>
+          
+        </div>
+      </li>
+    <% end %>
+    
+    
+  </ul>
+
+  <%== pagy_task_nav(@pagy) %>
+<% end %>
+　<%= link_to '登録ページへ', new_task_path %>
