@@ -22,9 +22,9 @@ class TasksController < ApplicationController
 
   def create
     #@task = Task.new(task_params)
-    @task = current_user.tasks.build(task_params)
+    task = current_user.tasks.build(task_params)
     #@message.saveは失敗するとfalseを返すため、成功した場合と失敗した場合を書く
-    if @task.save
+    if task.save
       #flashはflashメッセージを出す別ファイルをベット作る
       flash[:success] = 'Task が正常に投稿されました'
       #redirect_to はリンク先を指定して強制的に飛ばすメソッド
@@ -39,7 +39,7 @@ class TasksController < ApplicationController
   
 
   def edit
-    @task = current_user.tasks.find(params[:id])
+    task = current_user.tasks.find(params[:id])
     #@task = Task.find(params[:id])
   end
 
