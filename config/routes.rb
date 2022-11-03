@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   
   #toppageを最初の入り口にするためtasks#indexをコメントアウト（課題用）
   #root to: 'tasks#index'
-  resources :users, only: [:index, :show, :create]
+  resources :users, only: [:create]
   #課題用にtasksを設定
-  resources :tasks, only: [:create, :destroy,:new,:edit,:show,:update]
+  resources :tasks
   
 end
