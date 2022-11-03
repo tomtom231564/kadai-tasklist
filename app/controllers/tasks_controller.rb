@@ -22,7 +22,7 @@ class TasksController < ApplicationController
 
   def create
     #@task = Task.new(task_params)
-    task = current_user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_params)
     #@message.saveは失敗するとfalseを返すため、成功した場合と失敗した場合を書く
     if task.save
       #flashはflashメッセージを出す別ファイルをベット作る
@@ -67,8 +67,6 @@ class TasksController < ApplicationController
   
   private
   
-  
-
   # Strong Parameter
   def task_params
     #Messageモデルのフォームから得られるデータに関するものだと明示し、
