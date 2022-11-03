@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in#課題に合わせて挿入
-  before_action :correct_user, only: [:destroy,:show,:update]
+  before_action :correct_user, only: [:destroy,:show,:update,:edit]
   #before_action :set_task, only: [:show, :edit, :update, :destroy]
   
   def index
@@ -39,7 +39,8 @@ class TasksController < ApplicationController
   
 
   def edit
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
+    #@task = Task.find(params[:id])
   end
 
   def update
